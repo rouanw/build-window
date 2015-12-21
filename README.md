@@ -2,6 +2,10 @@
 
 Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Bamboo. Pull requests welcome.
 
+## Example
+
+![Alt text](http://rouanw.github.io/images/build_health_screenshot.png "Example build dashboard")
+
 ## Getting started
 
 Run `bundle install`.
