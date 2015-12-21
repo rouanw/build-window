@@ -1,0 +1,10 @@
+{
+  "bambooBaseUrl": "https://ci.openmrs.org/",
+  "maxBuilds": "25",
+  "builds": [
+    "AS-ASML",
+    "BB-BDB",
+    "CA-CA",
+    "EBOLA-EEM"
+  ]
+}

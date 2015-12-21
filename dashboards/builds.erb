@@ -1,0 +1,23 @@
+<% content_for :title do %>Build Health<% end %>
+<div class="gridster">
+  <ul>
+    <%
+      if (Builds::BUILD_LIST.count > 4) then
+        num_cols = 4
+        widget_size = 1
+      else
+        num_cols = 2
+        widget_size = 2
+      end
+    %>
+    <% Builds::BUILD_LIST.each_with_index do |build, index| %>
+      <% build_num = index + 1 %>
+      <li data-row="<%= build_num % num_cols == 0 ? build_num / num_cols : build_num / num_cols + 1 %>"
+        data-col="<%= build_num % num_cols == 0 ? num_cols : build_num % num_cols %>"
+        data-sizex="<%= widget_size %>" data-sizey="1">
+        <div data-id="<%= build %>"
+          data-view="BuildHealth"></div>
+      </li>
+    <% end %>
+  </ul>
+</div>
