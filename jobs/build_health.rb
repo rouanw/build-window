@@ -57,7 +57,7 @@ def get_bamboo_build_health(build_id)
     name: latest_build['plan']['shortName'],
     status: latest_build['state'] == 'Successful' ? SUCCESS : FAILED,
     duration: latest_build['buildDurationDescription'],
-    link: Builds::BUILD_CONFIG['bambooBaseUrl'] + 'browse/' + latest_build['key'],
+    link: "#{Builds::BUILD_CONFIG['bambooBaseUrl']}/browse/#{latest_build['key']}",
     health: calculate_health(successful_count, results.count),
     time: latest_build['buildRelativeTime']
   }
