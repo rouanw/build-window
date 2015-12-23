@@ -17,7 +17,7 @@ Edit `config/builds.json` with the configuration for your builds:
   "bambooBaseUrl": "https://ci.openmrs.org",
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
-    {"id": "AS-ASML", "server": "Bamboo"},
+    {"id": "rails/rails", "server": "Travis"},
     {"id": "BB-BDB", "server": "Bamboo"},
     {"id": "EBOLA-EEM", "server": "Bamboo"}
   ]
