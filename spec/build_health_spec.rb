@@ -2,9 +2,11 @@ require 'spec_helper.rb'
 
 describe 'get build health' do
 
-  before(:each) do
-    SCHEDULER = Object.new
-    allow(SCHEDULER).to receive(:every)
+  before(:all) do
+    class SCHEDULER
+      def self.every(ignoreme)
+      end
+    end
     require_job 'build_health.rb'
   end
 
