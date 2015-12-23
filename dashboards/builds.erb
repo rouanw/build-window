@@ -15,7 +15,7 @@
       <li data-row="<%= build_num % num_cols == 0 ? build_num / num_cols : build_num / num_cols + 1 %>"
         data-col="<%= build_num % num_cols == 0 ? num_cols : build_num % num_cols %>"
         data-sizex="<%= widget_size %>" data-sizey="1">
-        <div data-id="<%= build %>"
+        <div data-id="<%= build['id'] %>" data-server="<%= build['server'] %>"
           data-view="BuildHealth"></div>
       </li>
     <% end %>

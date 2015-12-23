@@ -1,6 +1,6 @@
 # Build Health Dashboard
 
-Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Bamboo. Pull requests welcome.
+Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Travis and Bamboo. Pull requests welcome.
 
 ## Example
 
@@ -14,13 +14,12 @@ Edit `config/builds.json` with the configuration for your builds:
 
 ```
 {
-  "bambooBaseUrl": "https://ci.openmrs.org/",
-  "maxBuilds": "25",
+  "bambooBaseUrl": "https://ci.openmrs.org",
   "builds": [
-    "AS-ASML",
-    "BB-BDB",
-    "CA-CA",
-    "EBOLA-EEM"
+    {"id": "sinatra/sinatra", "server": "Travis"},
+    {"id": "AS-ASML", "server": "Bamboo"},
+    {"id": "BB-BDB", "server": "Bamboo"},
+    {"id": "EBOLA-EEM", "server": "Bamboo"}
   ]
 }
 ```

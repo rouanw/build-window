@@ -1,3 +1,9 @@
+Batman.Filters.dateFormat = (date) ->
+  if moment(date).isValid() then moment(date).fromNow() else date
+
+Batman.Filters.durationFormat = (duration) ->
+  if /^[0-9]*$/.test(duration) then moment.duration(duration, 'seconds').humanize() else duration
+
 class Dashing.BuildHealth extends Dashing.Widget
   onData: (data) ->
     if data.status == 'Failed'

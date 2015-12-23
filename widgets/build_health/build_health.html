@@ -4,12 +4,12 @@
 
 <p>
   <img data-bind-src="image"></img>
-  <strong data-bind="health"></strong>% of recent builds passed
+  <strong data-bind="health"></strong>% <span class="small">of recent builds passed</span>
 </p>
 
 <p class="context-info">
-  Ran for <span data-bind="duration"></span>,
-  <span data-bind="time"></span>
+  Ran for <span data-bind="duration | durationFormat"></span>,
+  <span data-bind="time | dateFormat"></span>
 </p>
-<p class="more-info"><a data-bind-href="link">View on Bamboo</a></p>
+<p class="more-info"><a data-bind-href="link">View on <span data-bind="server"></span></a></p>
 <p class="updated-at" data-bind="updatedAtMessage"></p>
