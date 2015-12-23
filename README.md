@@ -1,5 +1,7 @@
 # Build Health Dashboard
 
+[![Build Status](https://travis-ci.org/rouanw/build-health-dashboard.svg?branch=master)](https://travis-ci.org/rouanw/build-health-dashboard)
+
 Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Travis and Bamboo.
 
 ## Example
