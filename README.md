@@ -1,6 +1,6 @@
 # Build Health Dashboard
 
-Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Travis and Bamboo. Pull requests welcome.
+Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Travis and Bamboo.
 
 ## Example
 
@@ -27,3 +27,7 @@ Edit `config/builds.json` with the configuration for your builds:
 Run `dashing start`.
 
 Runs at `http://localhost:3030/builds` by default. See https://github.com/Shopify/dashing/wiki for details on how to run it elsewhere, as a service and more.
+
+## Contributing
+
+Pull requests welcome. Run the tests with `rspec`.
