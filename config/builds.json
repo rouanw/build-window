@@ -1,8 +1,9 @@
 {
   "bambooBaseUrl": "https://ci.openmrs.org",
+  "teamCityBaseUrl": "https://teamcity.jetbrains.com",
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
-    {"id": "rails/rails", "server": "Travis"},
+    {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
     {"id": "BB-BDB", "server": "Bamboo"},
     {"id": "EBOLA-EEM", "server": "Bamboo"}
   ]

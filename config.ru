@@ -18,4 +18,9 @@ map Sinatra::Application.assets_prefix do
   run Sinatra::Application.sprockets
 end
 
+require 'teamcity'
+TeamCity.configure do |config|
+  config.endpoint = Builds::BUILD_CONFIG['teamCityBaseUrl'] + '/app/rest?guest=1'
+end
+
 run Sinatra::Application

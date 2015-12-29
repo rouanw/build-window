@@ -8,8 +8,8 @@
 </p>
 
 <p class="context-info">
-  Ran for <span data-bind="duration | durationFormat"></span>,
-  <span data-bind="time | dateFormat"></span>
+  <span data-showif="duration">Ran for <span data-bind="duration | durationFormat"></span>,</span>
+  <span data-showif="time" data-bind="time | dateFormat"></span>
 </p>
 <p class="more-info"><a data-bind-href="link">View on <span data-bind="server"></span></a></p>
 <p class="updated-at" data-bind="updatedAtMessage"></p>

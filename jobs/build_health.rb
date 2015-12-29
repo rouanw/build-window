@@ -1,6 +1,7 @@
 require 'net/http'
 require 'json'
 require 'uri'
+require 'teamcity'
 
 SUCCESS = 'Successful'
 FAILED = 'Failed'
@@ -26,7 +27,22 @@ def get_build_health(build)
     return get_bamboo_build_health build['id']
   elsif build['server'] == 'Travis' then
     return get_travis_build_health build['id']
+  elsif build['server'] == 'TeamCity' then
+    return get_teamcity_build_health build['id']
   end
+end
+
+def get_teamcity_build_health(build_id)
+  builds = TeamCity.builds(count: 25, buildType: build_id)
+  latest_build = TeamCity.build(id: builds.first['id'])
+  successful_count = builds.count { |build| build['status'] == 'SUCCESS' }
+
+  return {
+    name: latest_build['buildType']['name'],
+    status: latest_build['status'] == 'SUCCESS' ? SUCCESS : FAILED,
+    link: builds.first['webUrl'],
+    health: calculate_health(successful_count, builds.count)
+  }
 end
 
 def get_travis_build_health(build_id)
