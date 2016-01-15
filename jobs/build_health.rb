@@ -29,6 +29,8 @@ def get_build_health(build)
     return get_travis_build_health build['id']
   elsif build['server'] == 'TeamCity' then
     return get_teamcity_build_health build['id']
+  elsif build['server'] == 'GO' then
+    return get_go_build_health build['id']
   end
 end
 
@@ -58,6 +60,28 @@ def get_travis_build_health(build_id)
     link: "https://travis-ci.org/#{build_id}/builds/#{latest_build['id']}",
     health: calculate_health(successful_count, results.count),
     time: latest_build['started_at']
+  }
+end
+
+def get_go_pipeline_status(pipeline)
+  return pipeline['stages'].index { |s| s['result'] == 'Failed' } == nil ? SUCCESS : FAILED
+end
+
+def get_go_build_health(build_id)
+  url = "#{Builds::BUILD_CONFIG['goBaseUrl']}/go/api/pipelines/#{build_id}/history"
+  build_info = get_url url
+
+  results = build_info['pipelines']
+
+  latest_pipeline = results[0]
+
+  return {
+    name: latest_pipeline['name'],
+    status: get_go_pipeline_status(latest_pipeline),
+    duration: 0,
+    link: "#{Builds::BUILD_CONFIG['goBaseUrl']}/go/pipelines/value_stream_map/#{build_id}/#{latest_pipeline['label']}",
+    health: calculate_health(50, build_info['pagination']['total']),
+    time: Time.now
   }
 end
 

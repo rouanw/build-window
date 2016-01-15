@@ -1,10 +1,12 @@
 {
   "bambooBaseUrl": "https://ci.openmrs.org",
+  "goBaseUrl": "http://some-go-server:8153",
   "teamCityBaseUrl": "https://teamcity.jetbrains.com",
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
     {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
     {"id": "BB-BDB", "server": "Bamboo"},
-    {"id": "EBOLA-EEM", "server": "Bamboo"}
+    {"id": "EBOLA-EEM", "server": "Bamboo"},
+    {"id": "Some-Pipeline", "server": "GO"}
   ]
 }
