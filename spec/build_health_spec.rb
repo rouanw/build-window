@@ -189,17 +189,17 @@ describe 'get build health' do
       end
 
       it 'should get go build info from go api' do
-        build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'GO'
+        build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'Go'
         expect(WebMock.a_request(:get, 'http://go-place/go/api/pipelines/MY-BUILD/history')).to have_been_made
       end
 
       it 'should return the name of the build' do
-        build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'GO'
+        build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'Go'
         expect(build_health[:name]).to eq('Go Pipeline')
       end
 
       it 'should return the status of the latest build when Successful' do
-        build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'GO'
+        build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'Go'
         expect(build_health[:status]).to eq('Successful')
       end
 
@@ -228,7 +228,7 @@ describe 'get build health' do
         }
         stub_request(:get, 'http://go-place/go/api/pipelines/MY-BUILD/history').
              to_return(:status => 200, :body => failed_build.to_json, :headers => {})
-        build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'GO'
+        build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'Go'
         expect(build_health[:status]).to eq('Failed')
 
       end

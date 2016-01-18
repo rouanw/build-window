@@ -18,13 +18,13 @@ Edit `config/builds.json` with the configuration for your builds:
 {
   "bambooBaseUrl": "https://ci.openmrs.org",
   "teamCityBaseUrl": "https://teamcity.jetbrains.com",
-  "goBaseUrl": "http://go-server.com:8153",
+  "goBaseUrl":"https://build.go.cd",
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
     {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
     {"id": "BB-BDB", "server": "Bamboo"},
     {"id": "EBOLA-EEM", "server": "Bamboo"},
-    {"id": "Example-Pipline", "server": "GO"}
+    {"id": "build-linux", "server": "Go"}
   ]
 }
 ```
