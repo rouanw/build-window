@@ -163,6 +163,7 @@ describe 'get build health' do
         expect(build_health[:health]).to eq(50)
       end
   end
+
   describe 'for go build' do
 
       before(:each) do
@@ -230,7 +231,46 @@ describe 'get build health' do
              to_return(:status => 200, :body => failed_build.to_json, :headers => {})
         build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'Go'
         expect(build_health[:status]).to eq('Failed')
+      end
 
+      it 'should return the build health' do
+        so_so = {
+          "pipelines"  => [
+            {
+              "name" => "Go Pipeline",
+              "label" => "90",
+              "stages" => [
+                {
+                  "result" => "Passed"
+                },
+                {
+                  "result" => "Failed"
+                }
+              ]
+            },
+            {
+              "name" => "Go Pipeline",
+              "label" => "90",
+              "stages" => [
+                {
+                  "result" => "Passed"
+                },
+                {
+                  "result" => "Passed"
+                }
+              ]
+            }
+          ],
+          "pagination" => {
+            "offset" => 0,
+            "total" => 92,
+            "page_size" => 10
+          }
+        }
+        stub_request(:get, 'http://go-place/go/api/pipelines/MY-BUILD/history').
+             to_return(:status => 200, :body => so_so.to_json, :headers => {})
+        build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'Go'
+        expect(build_health[:health]).to eq(50)
       end
 
   end
