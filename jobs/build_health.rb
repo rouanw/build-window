@@ -108,7 +108,7 @@ def get_bamboo_build_health(build_id)
   }
 end
 
-SCHEDULER.every '10s' do
+SCHEDULER.every '20s' do
   Builds::BUILD_LIST.each do |build|
     send_event(build['id'], get_build_health(build))
   end
