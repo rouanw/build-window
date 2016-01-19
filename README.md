@@ -23,7 +23,6 @@ Edit `config/builds.json` with the configuration for your builds:
     {"id": "sinatra/sinatra", "server": "Travis"},
     {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
     {"id": "BB-BDB", "server": "Bamboo"},
-    {"id": "EBOLA-EEM", "server": "Bamboo"},
     {"id": "build-linux", "server": "Go"}
   ]
 }
