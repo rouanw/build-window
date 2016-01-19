@@ -18,3 +18,6 @@ class Dashing.BuildHealth extends Dashing.Widget
     else if (health >= 40) then 'assets/health-40to59.svg'
     else if (health >= 20) then 'assets/health-20to39.svg'
     else 'assets/health-00to19.svg'
+
+  @accessor 'show-health', ->
+    @get('health') >= 0

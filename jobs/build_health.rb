@@ -6,7 +6,7 @@ require 'teamcity'
 SUCCESS = 'Successful'
 FAILED = 'Failed'
 
-def get_url(url)
+def get_url(url, auth = nil)
   uri = URI.parse(url)
   http = Net::HTTP.new(uri.host, uri.port)
   if uri.scheme == 'https'
@@ -14,6 +14,11 @@ def get_url(url)
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
   end
   request = Net::HTTP::Get.new(uri.request_uri)
+
+  if auth != nil then
+    request.basic_auth *auth
+  end
+
   response = http.request(request)
   return JSON.parse(response.body)
 end
@@ -29,6 +34,8 @@ def get_build_health(build)
     return get_travis_build_health build['id']
   elsif build['server'] == 'TeamCity' then
     return get_teamcity_build_health build['id']
+  elsif build['server'] == 'Go' then
+    return get_go_build_health build['id']
   end
 end
 
@@ -58,6 +65,27 @@ def get_travis_build_health(build_id)
     link: "https://travis-ci.org/#{build_id}/builds/#{latest_build['id']}",
     health: calculate_health(successful_count, results.count),
     time: latest_build['started_at']
+  }
+end
+
+def get_go_pipeline_status(pipeline)
+  return pipeline['stages'].index { |s| s['result'] == 'Failed' } == nil ? SUCCESS : FAILED
+end
+
+def get_go_build_health(build_id)
+  url = "#{Builds::BUILD_CONFIG['goBaseUrl']}/go/api/pipelines/#{build_id}/history"
+  build_info = get_url url, [ENV['GO_USER'], ENV['GO_PASSWORD']]
+
+  results = build_info['pipelines']
+
+  latest_pipeline = results[0]
+
+  return {
+    name: latest_pipeline['name'],
+    status: get_go_pipeline_status(latest_pipeline),
+    duration: 0,
+    link: "#{Builds::BUILD_CONFIG['goBaseUrl']}/go/tab/pipeline/history/#{build_id}",
+    time: Time.now
   }
 end
 
