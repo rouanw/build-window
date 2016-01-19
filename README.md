@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rouanw/build-health-dashboard.svg?branch=master)](https://travis-ci.org/rouanw/build-health-dashboard)
 
-Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Travis, TeamCity Bamboo and Go.
+Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Travis, TeamCity, Bamboo and Go.
 
 ## Example
 
