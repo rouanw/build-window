@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rouanw/build-health-dashboard.svg?branch=master)](https://travis-ci.org/rouanw/build-health-dashboard)
 
-Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Travis, TeamCity, Bamboo and GO CD.
+Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Travis, TeamCity Bamboo and Go.
 
 ## Example
 
@@ -27,6 +27,13 @@ Edit `config/builds.json` with the configuration for your builds:
     {"id": "build-linux", "server": "Go"}
   ]
 }
+```
+
+Place your API credentials in a `.env` file at the root of the project. (Please note that authentication is currently only supported for Go CD.) Example:
+
+```
+GO_USER=view
+GO_PASSWORD=password
 ```
 
 Run `dashing start`.
