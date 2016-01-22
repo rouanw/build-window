@@ -1,11 +1,12 @@
 {
   "bambooBaseUrl": "https://ci.openmrs.org",
-  "goBaseUrl":"https://build.go.cd",
+  "goBaseUrl": "https://build.go.cd",
   "teamCityBaseUrl": "https://teamcity.jetbrains.com",
+  "jenkinsBaseUrl": "https://builds.apache.org",
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
     {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
-    {"id": "BB-BDB", "server": "Bamboo"},
+    {"id": "Lucene-Solr-Maven-5.4", "server": "Jenkins"},
     {"id": "EBOLA-EEM", "server": "Bamboo"}
   ]
 }

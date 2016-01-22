@@ -36,6 +36,8 @@ def get_build_health(build)
     return get_teamcity_build_health build['id']
   elsif build['server'] == 'Go' then
     return get_go_build_health build['id']
+  elsif build['server'] == 'Jenkins' then
+    return get_jenkins_build_health build['id']
   end
 end
 
@@ -105,6 +107,22 @@ def get_bamboo_build_health(build_id)
     link: "#{Builds::BUILD_CONFIG['bambooBaseUrl']}/browse/#{latest_build['key']}",
     health: calculate_health(successful_count, results.count),
     time: latest_build['buildRelativeTime']
+  }
+end
+
+def get_jenkins_build_health(build_id)
+  url = "#{Builds::BUILD_CONFIG['jenkinsBaseUrl']}/job/#{build_id}/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]"
+  build_info = get_url URI.encode(url)
+  builds = build_info['builds']
+  successful_count = builds.count { |build| build['result'] == 'SUCCESS' }
+  latest_build = builds[0]
+  return {
+    name: latest_build['fullDisplayName'],
+    status: latest_build['result'] == 'SUCCESS' ? SUCCESS : FAILED,
+    duration: latest_build['duration'] / 1000,
+    link: latest_build['url'],
+    health: calculate_health(successful_count, builds.count),
+    time: latest_build['timestamp']
   }
 end
 
