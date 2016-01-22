@@ -85,10 +85,8 @@ def get_go_build_health(build_id)
   return {
     name: latest_pipeline['name'],
     status: get_go_pipeline_status(latest_pipeline),
-    duration: 0,
     link: "#{Builds::BUILD_CONFIG['goBaseUrl']}/go/tab/pipeline/history/#{build_id}",
     health: calculate_health(successful_count, results.count),
-    time: Time.now
   }
 end
 
