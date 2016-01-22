@@ -39,7 +39,11 @@ GO_PASSWORD=password
 
 Run `dashing start`.
 
-Runs at `http://localhost:3030/builds` by default. See https://github.com/Shopify/dashing/wiki for details on how to run it elsewhere, as a service and more.
+Runs at `http://localhost:3030/builds` by default.
+
+Run `dashing start -d -p 3031` to run it as a daemon and to specify the port. You can stop the daemon with `dashing stop`.
+
+See https://github.com/Shopify/dashing/wiki for more details.
 
 ## Contributing
 
