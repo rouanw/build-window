@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rouanw/build-health-dashboard.svg?branch=master)](https://travis-ci.org/rouanw/build-health-dashboard)
 
-Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Travis, TeamCity, Bamboo and Go.
+Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Jenkins, Travis, TeamCity, Bamboo and Go.
 
 ## Example
 
@@ -19,9 +19,11 @@ Edit `config/builds.json` with the configuration for your builds:
   "bambooBaseUrl": "https://ci.openmrs.org",
   "teamCityBaseUrl": "https://teamcity.jetbrains.com",
   "goBaseUrl":"https://build.go.cd",
+  "jenkinsBaseUrl": "https://builds.apache.org",
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
     {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
+    {"id": "Lucene-Solr-Maven-5.4", "server": "Jenkins"},
     {"id": "BB-BDB", "server": "Bamboo"},
     {"id": "build-linux", "server": "Go"}
   ]
