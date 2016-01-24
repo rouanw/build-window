@@ -1,6 +1,6 @@
 # Build Window
 
-[![Build Status](https://travis-ci.org/rouanw/build-health-dashboard.svg?branch=master)](https://travis-ci.org/rouanw/build-health-dashboard)
+[![Build Status](https://travis-ci.org/rouanw/build-window.svg?branch=master)](https://travis-ci.org/rouanw/build-window)
 
 Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Jenkins, Travis, TeamCity, Bamboo and Go.
 
@@ -51,4 +51,4 @@ Pull requests welcome. Run the tests with `rspec`.
 
 ## Contributions
 
-Thanks to Max Lincoln (@maxlinc) for coming up with the name __Build Window__.
+Thanks to Max Lincoln ([@maxlinc](https://github.com/maxlinc)) for coming up with the name __Build Window__.
