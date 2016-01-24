@@ -1,4 +1,4 @@
-# Build Health Dashboard
+# Build Window
 
 [![Build Status](https://travis-ci.org/rouanw/build-health-dashboard.svg?branch=master)](https://travis-ci.org/rouanw/build-health-dashboard)
 
@@ -48,3 +48,7 @@ See https://github.com/Shopify/dashing/wiki for more details.
 ## Contributing
 
 Pull requests welcome. Run the tests with `rspec`.
+
+## Contributions
+
+Thanks to Max Lincoln (@maxlinc) for coming up with the name __Build Window__.
