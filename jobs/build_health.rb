@@ -1,10 +1,15 @@
-require 'net/http'
-require 'json'
-require 'uri'
-require 'teamcity'
-
 SUCCESS = 'Successful'
 FAILED = 'Failed'
+
+def api_functions
+  return {
+    'Travis' => lambda { |build_id| get_travis_build_health build_id},
+    'TeamCity' => lambda { |build_id| get_teamcity_build_health build_id},
+    'Bamboo' => lambda { |build_id| get_bamboo_build_health build_id},
+    'Go' => lambda { |build_id| get_go_build_health build_id},
+    'Jenkins' => lambda { |build_id| get_jenkins_build_health build_id}
+  }
+end
 
 def get_url(url, auth = nil)
   uri = URI.parse(url)
@@ -28,17 +33,7 @@ def calculate_health(successful_count, count)
 end
 
 def get_build_health(build)
-  if build['server'] == 'Bamboo' then
-    return get_bamboo_build_health build['id']
-  elsif build['server'] == 'Travis' then
-    return get_travis_build_health build['id']
-  elsif build['server'] == 'TeamCity' then
-    return get_teamcity_build_health build['id']
-  elsif build['server'] == 'Go' then
-    return get_go_build_health build['id']
-  elsif build['server'] == 'Jenkins' then
-    return get_jenkins_build_health build['id']
-  end
+  api_functions[build['server']].call(build['id'])
 end
 
 def get_teamcity_build_health(build_id)
