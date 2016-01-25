@@ -4,7 +4,7 @@ Batman.Filters.dateFormat = (date) ->
 Batman.Filters.durationFormat = (duration) ->
   if /^[0-9]*$/.test(duration) then moment.duration(duration, 'seconds').humanize() else duration
 
-class Dashing.BuildHealth extends Dashing.Widget
+class Dashing.BuildWindow extends Dashing.Widget
   onData: (data) ->
     if data.status == 'Failed'
       $(@node).css('background-color', '#a73737')
