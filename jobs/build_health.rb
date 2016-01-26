@@ -71,7 +71,12 @@ end
 
 def get_go_build_health(build_id)
   url = "#{Builds::BUILD_CONFIG['goBaseUrl']}/go/api/pipelines/#{build_id}/history"
-  build_info = get_url url, [ENV['GO_USER'], ENV['GO_PASSWORD']]
+
+  if ENV['GO_USER'] != nil then
+    auth = [ ENV['GO_USER'], ENV['GO_PASSWORD'] ]
+  end
+
+  build_info = get_url url, auth
 
   results = build_info['pipelines']
   successful_count = results.count { |result| get_go_pipeline_status(result) == SUCCESS }
