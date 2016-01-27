@@ -116,7 +116,7 @@ def get_jenkins_build_health(build_id)
   latest_build = builds[0]
   return {
     name: latest_build['fullDisplayName'],
-    status: latest_build['result'] == 'SUCCESS' ? SUCCESS : FAILED,
+    status: latest_build['result'] == 'SUCCESS' || latest_build['result'].nil? ? SUCCESS : FAILED,
     duration: latest_build['duration'] / 1000,
     link: latest_build['url'],
     health: calculate_health(successful_count, builds.count),
