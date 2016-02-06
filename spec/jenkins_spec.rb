@@ -121,4 +121,36 @@ describe 'get build data from jenkins' do
     expect(build_health[:status]).to eq('Successful')
   end
 
+  it 'should not include running builds in the build health calculation' do
+    running_builds = {
+      "builds" => [{
+        "duration" => 459766,
+        "fullDisplayName" => "a build",
+        "id" => "15",
+        "result" => nil,
+        "timestamp" => 1453489268807,
+        "url" => "someurl/15/"
+      }, {
+        "duration" => 427875,
+        "fullDisplayName" => "a build",
+        "id" => "1",
+        "result" => nil,
+        "timestamp" => 1451584715235,
+        "url" => "someurl/1/"
+      },
+      {
+        "duration" => 427875,
+        "fullDisplayName" => "a build",
+        "id" => "1",
+        "result" => 'SUCCESS',
+        "timestamp" => 1451584715235,
+        "url" => "someurl/1/"
+      }]
+    }
+    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]').
+         to_return(:status => 200, :body => running_builds.to_json, :headers => {})
+    build_health = get_build_health 'id' => 'jenkins-build', 'server' => 'Jenkins'
+    expect(build_health[:health]).to eq(100)
+  end
+
 end

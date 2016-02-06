@@ -112,15 +112,16 @@ def get_jenkins_build_health(build_id)
   url = "#{Builds::BUILD_CONFIG['jenkinsBaseUrl']}/job/#{build_id}/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]"
   build_info = get_url URI.encode(url)
   builds = build_info['builds']
-  successful_count = builds.count { |build| build['result'] == 'SUCCESS' }
-  latest_build_with_status = builds.find { |build| !build['result'].nil? }
+  builds_with_status = builds.select { |build| !build['result'].nil? }
+  successful_count = builds_with_status.count { |build| build['result'] == 'SUCCESS' }
+  latest_build = builds_with_status.first
   return {
-    name: latest_build_with_status['fullDisplayName'],
-    status: latest_build_with_status['result'] == 'SUCCESS' ? SUCCESS : FAILED,
-    duration: latest_build_with_status['duration'] / 1000,
-    link: latest_build_with_status['url'],
-    health: calculate_health(successful_count, builds.count),
-    time: latest_build_with_status['timestamp']
+    name: latest_build['fullDisplayName'],
+    status: latest_build['result'] == 'SUCCESS' ? SUCCESS : FAILED,
+    duration: latest_build['duration'] / 1000,
+    link: latest_build['url'],
+    health: calculate_health(successful_count, builds_with_status.count),
+    time: latest_build['timestamp']
   }
 end
 
