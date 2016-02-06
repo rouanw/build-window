@@ -113,14 +113,14 @@ def get_jenkins_build_health(build_id)
   build_info = get_url URI.encode(url)
   builds = build_info['builds']
   successful_count = builds.count { |build| build['result'] == 'SUCCESS' }
-  latest_build = builds[0]
+  latest_build_with_status = builds.find { |build| !build['result'].nil? }
   return {
-    name: latest_build['fullDisplayName'],
-    status: latest_build['result'] == 'SUCCESS' ? SUCCESS : FAILED,
-    duration: latest_build['duration'] / 1000,
-    link: latest_build['url'],
+    name: latest_build_with_status['fullDisplayName'],
+    status: latest_build_with_status['result'] == 'SUCCESS' ? SUCCESS : FAILED,
+    duration: latest_build_with_status['duration'] / 1000,
+    link: latest_build_with_status['url'],
     health: calculate_health(successful_count, builds.count),
-    time: latest_build['timestamp']
+    time: latest_build_with_status['timestamp']
   }
 end
 
