@@ -6,6 +6,7 @@ describe 'get build data from jenkins' do
   before(:each) do
     @jenkins_response = {
       "builds" => [{
+        "building" => false,
         "duration" => 10000,
         "fullDisplayName" => "a build",
         "id" => "15",
@@ -14,13 +15,13 @@ describe 'get build data from jenkins' do
         "url" => "urlOfSorts"
       }]
     }
-    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]').
+    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,building,timestamp,id,result,duration,url,fullDisplayName]').
          to_return(:status => 200, :body => @jenkins_response.to_json, :headers => {})
   end
 
   it 'should get jenkins build info from jenkins api' do
     build_health = get_build_health 'id' => 'jenkins-build', 'server' => 'Jenkins'
-    expect(WebMock.a_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]')).to have_been_made
+    expect(WebMock.a_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,building,timestamp,id,result,duration,url,fullDisplayName]')).to have_been_made
   end
 
   it 'should return the name of the build' do
@@ -36,6 +37,7 @@ describe 'get build data from jenkins' do
   it 'should return the status of the latest build when Failed' do
     failed_build = {
       "builds" => [{
+        "building" => false,
         "duration" => 427875,
         "fullDisplayName" => "a build",
         "id" => "1",
@@ -44,7 +46,7 @@ describe 'get build data from jenkins' do
         "url" => "someurl/1/"
       }]
     }
-    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]').
+    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,building,timestamp,id,result,duration,url,fullDisplayName]').
          to_return(:status => 200, :body => failed_build.to_json, :headers => {})
     build_health = get_build_health 'id' => 'jenkins-build', 'server' => 'Jenkins'
     expect(build_health[:status]).to eq('Failed')
@@ -68,6 +70,7 @@ describe 'get build data from jenkins' do
   it 'should return the build health' do
     so_so = {
       "builds" => [{
+        "building" => false,
         "duration" => 459766,
         "fullDisplayName" => "a build",
         "id" => "15",
@@ -75,6 +78,7 @@ describe 'get build data from jenkins' do
         "timestamp" => 1453489268807,
         "url" => "someurl/15/"
       }, {
+        "building" => false,
         "duration" => 427875,
         "fullDisplayName" => "a build",
         "id" => "1",
@@ -83,7 +87,7 @@ describe 'get build data from jenkins' do
         "url" => "someurl/1/"
       }]
     }
-    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]').
+    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,building,timestamp,id,result,duration,url,fullDisplayName]').
          to_return(:status => 200, :body => so_so.to_json, :headers => {})
     build_health = get_build_health 'id' => 'jenkins-build', 'server' => 'Jenkins'
     expect(build_health[:health]).to eq(50)
@@ -92,6 +96,7 @@ describe 'get build data from jenkins' do
   it 'should return the build status of the latest non-nil build' do
     running_builds = {
       "builds" => [{
+        "building" => false,
         "duration" => 459766,
         "fullDisplayName" => "a build",
         "id" => "15",
@@ -99,6 +104,7 @@ describe 'get build data from jenkins' do
         "timestamp" => 1453489268807,
         "url" => "someurl/15/"
       }, {
+        "building" => false,
         "duration" => 427875,
         "fullDisplayName" => "a build",
         "id" => "1",
@@ -107,6 +113,7 @@ describe 'get build data from jenkins' do
         "url" => "someurl/1/"
       },
       {
+        "building" => false,
         "duration" => 427875,
         "fullDisplayName" => "a build",
         "id" => "1",
@@ -115,7 +122,7 @@ describe 'get build data from jenkins' do
         "url" => "someurl/1/"
       }]
     }
-    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]').
+    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,building,timestamp,id,result,duration,url,fullDisplayName]').
          to_return(:status => 200, :body => running_builds.to_json, :headers => {})
     build_health = get_build_health 'id' => 'jenkins-build', 'server' => 'Jenkins'
     expect(build_health[:status]).to eq('Successful')
@@ -124,6 +131,7 @@ describe 'get build data from jenkins' do
   it 'should not include running builds in the build health calculation' do
     running_builds = {
       "builds" => [{
+        "building" => false,
         "duration" => 459766,
         "fullDisplayName" => "a build",
         "id" => "15",
@@ -131,6 +139,7 @@ describe 'get build data from jenkins' do
         "timestamp" => 1453489268807,
         "url" => "someurl/15/"
       }, {
+        "building" => false,
         "duration" => 427875,
         "fullDisplayName" => "a build",
         "id" => "1",
@@ -139,6 +148,7 @@ describe 'get build data from jenkins' do
         "url" => "someurl/1/"
       },
       {
+        "building" => false,
         "duration" => 427875,
         "fullDisplayName" => "a build",
         "id" => "1",
@@ -147,10 +157,44 @@ describe 'get build data from jenkins' do
         "url" => "someurl/1/"
       }]
     }
-    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]').
+    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,building,timestamp,id,result,duration,url,fullDisplayName]').
          to_return(:status => 200, :body => running_builds.to_json, :headers => {})
     build_health = get_build_health 'id' => 'jenkins-build', 'server' => 'Jenkins'
     expect(build_health[:health]).to eq(100)
+  end
+
+  it 'should return status of the build as building when the current build is in a building state' do
+    running_build = {
+      "builds" => [{
+        "building" => true,
+        "duration" => 459766,
+        "fullDisplayName" => "a build",
+        "id" => "15",
+        "result" => "",
+        "timestamp" => 1453489268807,
+        "url" => "someurl/15/"
+      }, {
+        "building" => false,
+        "duration" => 427875,
+        "fullDisplayName" => "second build",
+        "id" => "1",
+        "result" => "FAILURE",
+        "timestamp" => 1451584715235,
+        "url" => "someurl/1/"
+      }, {
+        "building" => false,
+        "duration" => 427875,
+        "fullDisplayName" => "another build",
+        "id" => "2",
+        "result" => "SUCCESS",
+        "timestamp" => 1451584715235,
+        "url" => "someurl/1/"
+      }]
+    }
+    stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,building,timestamp,id,result,duration,url,fullDisplayName]').
+         to_return(:status => 200, :body => running_build.to_json, :headers => {})
+    build_health = get_build_health 'id' => 'jenkins-build', 'server' => 'Jenkins'
+    expect(build_health[:status]).to eq('Building')
   end
 
 end
