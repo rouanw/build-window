@@ -110,7 +110,6 @@ def get_bamboo_build_health(build_id)
 end
 
 def get_jenkins_build_status(current_build, latest_build)
-  status = FAILED
   if current_build['building'] then
     return BUILDING
   else
