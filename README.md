@@ -45,6 +45,16 @@ Run `dashing start -d -p 3031` to run it as a daemon and to specify the port. Yo
 
 See https://github.com/Shopify/dashing/wiki for more details.
 
+## Docker support
+
+You can spin up a Docker container with build-window by running:
+
+`docker-compose up -d`
+
+The application will be ready at `http://localhost:3030` (Linux) or at `http://<DOCKER_HOST_IP>:3030` (Windows/OS X).
+
+**PS:** You can also build the image and run a container separately, but [Docker Compose](https://docs.docker.com/compose/install/) makes this process much simpler.
+
 ## Contributing
 
 Pull requests welcome. Run the tests with `rspec`.
