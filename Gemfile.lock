@@ -6,7 +6,7 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.10.0)
+    coffee-script-source (1.8.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     daemons (1.2.3)
@@ -94,9 +94,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  coffee-script-source (= 1.8.0)
   dashing
   dotenv
   rspec
   rspec-mocks
   teamcity-ruby-client
   webmock
+
+BUNDLED WITH
+   1.10.6

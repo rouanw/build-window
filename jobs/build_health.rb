@@ -1,5 +1,6 @@
 SUCCESS = 'Successful'
 FAILED = 'Failed'
+BUILDING = 'Building'
 
 def api_functions
   return {
@@ -108,16 +109,28 @@ def get_bamboo_build_health(build_id)
   }
 end
 
+def get_jenkins_build_status(current_build, latest_build)
+  if current_build['building'] then
+    return BUILDING
+  else
+    return latest_build['result'] == 'SUCCESS' ? SUCCESS : FAILED
+  end
+end
+
 def get_jenkins_build_health(build_id)
-  url = "#{Builds::BUILD_CONFIG['jenkinsBaseUrl']}/job/#{build_id}/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]"
+  url = "#{Builds::BUILD_CONFIG['jenkinsBaseUrl']}/job/#{build_id}/api/json?tree=builds[status,building,timestamp,id,result,duration,url,fullDisplayName]"
   build_info = get_url URI.encode(url)
   builds = build_info['builds']
   builds_with_status = builds.select { |build| !build['result'].nil? }
   successful_count = builds_with_status.count { |build| build['result'] == 'SUCCESS' }
   latest_build = builds_with_status.first
+  current_build = builds.first
+
+  status = get_jenkins_build_status(current_build, latest_build)
+
   return {
     name: latest_build['fullDisplayName'],
-    status: latest_build['result'] == 'SUCCESS' ? SUCCESS : FAILED,
+    status: status,
     duration: latest_build['duration'] / 1000,
     link: latest_build['url'],
     health: calculate_health(successful_count, builds_with_status.count),
