@@ -110,7 +110,12 @@ end
 
 def get_jenkins_build_health(build_id)
   url = "#{Builds::BUILD_CONFIG['jenkinsBaseUrl']}/job/#{build_id}/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]"
-  build_info = get_url URI.encode(url)
+
+  if ENV['JENKINS_USER'] != nil then
+    auth = [ ENV['JENKINS_USER'], ENV['JENKINS_TOKEN'] ]
+  end
+
+  build_info = get_url URI.encode(url), auth
   builds = build_info['builds']
   builds_with_status = builds.select { |build| !build['result'].nil? }
   successful_count = builds_with_status.count { |build| build['result'] == 'SUCCESS' }
