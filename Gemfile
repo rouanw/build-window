@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'dashing'
+gem 'dashing', '1.3.7'
 gem 'dotenv'
 gem 'teamcity-ruby-client'
 
