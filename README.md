@@ -30,7 +30,7 @@ Edit `config/builds.json` with the configuration for your builds:
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
     {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
-    {"id": "Lucene-Solr-BadApples-NightlyTests-master", "server": "Jenkins"},
+    {"id": "Lucene-Solr-Maven-master", "server": "Jenkins"},
     {"id": "BB-BDB", "server": "Bamboo"},
     {"id": "build-linux", "server": "Go"}
   ]

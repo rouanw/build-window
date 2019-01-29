@@ -6,7 +6,7 @@
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
     {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
-    {"id": "HBase-1.1-JDK8", "server": "Jenkins"},
+    {"id": "Lucene-Solr-Maven-master", "server": "Jenkins"},
     {"id": "EBOLA-EEM", "server": "Bamboo"}
   ]
 }
