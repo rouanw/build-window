@@ -31,13 +31,6 @@ Edit `config/builds.json` with the configuration for your builds:
 }
 ```
 
-Place your API credentials in a `.env` file at the root of the project. (Please note that authentication is currently only supported for Go CD.) Example:
-
-```
-GO_USER=view
-GO_PASSWORD=password
-```
-
 Run `dashing start`.
 
 Runs at `http://localhost:3030/builds` by default.
@@ -45,6 +38,24 @@ Runs at `http://localhost:3030/builds` by default.
 Run `dashing start -d -p 3031` to run it as a daemon and to specify the port. You can stop the daemon with `dashing stop`.
 
 See https://github.com/Shopify/dashing/wiki for more details.
+
+### Authentication
+
+Place your API credentials in a `.env` file at the root of the project. (Please note that authentication is currently only supported for Go CD and Jenkins.) Example:
+
+#### Go
+
+```
+GO_USER=view
+GO_PASSWORD=password
+```
+
+#### Jenkins
+
+```
+JENKINS_USER=user
+JENKINS_TOKEN=password
+```
 
 ## Docker support
 
