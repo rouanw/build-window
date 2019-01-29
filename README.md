@@ -7,9 +7,15 @@ Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently su
 
 ## Example
 
-![Alt text](http://rouanw.github.io/images/build_health_screenshot.png "Example build dashboard")
+![Screen shot of build window](http://rouanw.github.io/images/build_health_screenshot.png "Example build dashboard")
 
 ## Getting started
+
+Get the code. It's probably best to fork this repo so you can keep your config in source code, otherwise you can just clone it:
+
+```sh
+git clone git@github.com:rouanw/build-window.git && cd build-window
+```
 
 Run `bundle install`.
 
