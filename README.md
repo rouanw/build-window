@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/rouanw/build-window.svg?branch=master)](https://travis-ci.org/rouanw/build-window)
 [![GitHub license](https://img.shields.io/github/license/rouanw/build-window.svg)](https://github.com/rouanw/build-window/blob/master/LICENSE)
 
-Dashboard built using [Dashing](http://shopify.github.com/dashing). Currently supports Jenkins, Travis, TeamCity, Bamboo and Go.
+Dashboard built using [Smashing](https://smashing.github.io) (formerly Dashing). Currently supports Jenkins, Travis, TeamCity, Bamboo and Go.
 
 ## Example
 
@@ -30,20 +30,20 @@ Edit `config/builds.json` with the configuration for your builds:
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
     {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
-    {"id": "Lucene-Solr-Maven-5.4", "server": "Jenkins"},
+    {"id": "Lucene-Solr-BadApples-NightlyTests-master", "server": "Jenkins"},
     {"id": "BB-BDB", "server": "Bamboo"},
     {"id": "build-linux", "server": "Go"}
   ]
 }
 ```
 
-Run `dashing start`.
+Run `smashing start`.
 
 Runs at `http://localhost:3030/builds` by default.
 
-Run `dashing start -d -p 3031` to run it as a daemon and to specify the port. You can stop the daemon with `dashing stop`.
+Run `smashing start -d -p 3031` to run it as a daemon and to specify the port. You can stop the daemon with `smashing stop`.
 
-See https://github.com/Shopify/dashing/wiki for more details.
+See https://github.com/Smashing/smashing/wiki for more details.
 
 ### Authentication
 
