@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'tzinfo-data'
 gem 'smashing'
 gem 'dotenv'
 gem 'teamcity-ruby-client'
