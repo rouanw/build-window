@@ -1,11 +1,9 @@
-FROM ruby:2.1.8-alpine
+FROM ruby:2.6
 
-RUN apk update && \
-    apk upgrade && \
-    apk add bash curl-dev ruby-dev build-base nodejs && \
-    rm -rf /var/cache/apk/* && \
-    gem update --system 2.6.1 && \
-    gem update bundler
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+RUN apt-get update && \
+    apt-get -y install nodejs && \
+    apt-get -y clean
 
 COPY . /build-window
 
