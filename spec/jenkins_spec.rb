@@ -3,19 +3,20 @@ require_job 'build_health.rb'
 
 describe 'get build data from jenkins' do
 
+  jenkins_response = {
+    "builds" => [{
+      "duration" => 10000,
+      "fullDisplayName" => "a build",
+      "id" => "15",
+      "result" => "SUCCESS",
+      "timestamp" => 1453489268807,
+      "url" => "urlOfSorts"
+    }]
+  }
+
   before(:each) do
-    @jenkins_response = {
-      "builds" => [{
-        "duration" => 10000,
-        "fullDisplayName" => "a build",
-        "id" => "15",
-        "result" => "SUCCESS",
-        "timestamp" => 1453489268807,
-        "url" => "urlOfSorts"
-      }]
-    }
     stub_request(:get, 'http://jenkins-url/job/jenkins-build/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]').
-         to_return(:status => 200, :body => @jenkins_response.to_json, :headers => {})
+         to_return(:status => 200, :body => jenkins_response.to_json, :headers => {})
   end
 
   it 'should get jenkins build info from jenkins api' do
@@ -151,6 +152,13 @@ describe 'get build data from jenkins' do
          to_return(:status => 200, :body => running_builds.to_json, :headers => {})
     build_health = get_build_health 'id' => 'jenkins-build', 'server' => 'Jenkins'
     expect(build_health[:health]).to eq(100)
+  end
+
+  it 'should allow each build to specify its base url' do
+    stub_request(:get, "http://example.org/jenkins/job/jenkins-build/api/json?tree=builds%5Bstatus,timestamp,id,result,duration,url,fullDisplayName%5D").
+      to_return(:status => 200, :body => jenkins_response.to_json, :headers => {})
+    build_health = get_build_health 'id' => 'jenkins-build', 'server' => 'Jenkins', 'baseUrl' => 'http://example.org/jenkins'
+    expect(WebMock.a_request(:get, 'http://example.org/jenkins/job/jenkins-build/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]')).to have_been_made
   end
 
 end

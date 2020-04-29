@@ -3,11 +3,11 @@ FAILED = 'Failed'
 
 def api_functions
   return {
-    'Travis' => lambda { |build_id| get_travis_build_health build_id},
-    'TeamCity' => lambda { |build_id| get_teamcity_build_health build_id},
-    'Bamboo' => lambda { |build_id| get_bamboo_build_health build_id},
-    'Go' => lambda { |build_id| get_go_build_health build_id},
-    'Jenkins' => lambda { |build_id| get_jenkins_build_health build_id}
+    'Travis' => lambda { |build| get_travis_build_health build['id']},
+    'TeamCity' => lambda { |build| get_teamcity_build_health build['id']},
+    'Bamboo' => lambda { |build| get_bamboo_build_health build['id']},
+    'Go' => lambda { |build| get_go_build_health build['id']},
+    'Jenkins' => lambda { |build| get_jenkins_build_health build}
   }
 end
 
@@ -33,7 +33,7 @@ def calculate_health(successful_count, count)
 end
 
 def get_build_health(build)
-  api_functions[build['server']].call(build['id'])
+  api_functions[build['server']].call(build)
 end
 
 def get_teamcity_build_health(build_id)
@@ -108,8 +108,9 @@ def get_bamboo_build_health(build_id)
   }
 end
 
-def get_jenkins_build_health(build_id)
-  url = "#{Builds::BUILD_CONFIG['jenkinsBaseUrl']}/job/#{build_id}/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]"
+def get_jenkins_build_health(build)
+  baseUrl = build.fetch('baseUrl', Builds::BUILD_CONFIG['jenkinsBaseUrl'])
+  url = "#{baseUrl}/job/#{build['id']}/api/json?tree=builds[status,timestamp,id,result,duration,url,fullDisplayName]"
 
   if ENV['JENKINS_USER'] != nil then
     auth = [ ENV['JENKINS_USER'], ENV['JENKINS_TOKEN'] ]
