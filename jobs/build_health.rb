@@ -1,4 +1,5 @@
 SUCCESS = 'Successful'
+UNSTABLE = 'Unstable'
 FAILED = 'Failed'
 
 def api_functions
@@ -123,7 +124,7 @@ def get_jenkins_build_health(build)
   latest_build = builds_with_status.first
   return {
     name: latest_build['fullDisplayName'],
-    status: latest_build['result'] == 'SUCCESS' ? SUCCESS : FAILED,
+    status: latest_build['result'] == 'SUCCESS' ? SUCCESS : latest_build['result'] == 'UNSTABLE' ? UNSTABLE : FAILED,
     duration: latest_build['duration'] / 1000,
     link: latest_build['url'],
     health: calculate_health(successful_count, builds_with_status.count),
