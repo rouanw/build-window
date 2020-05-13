@@ -2,23 +2,23 @@ require 'spec_helper.rb'
 require_job 'build_health.rb'
 
 describe 'get build data from bamboo' do
+  bamboo_response = {
+    "results"  => {
+      "result" => [
+        {
+          "state" => "Successful",
+          "buildDurationDescription" => "some time it took",
+          "plan" => {"shortName" => "Harvey"},
+          "key" => 33,
+          "buildRelativeTime" => "a long long time ago"
+        }
+      ]
+    }
+  }
 
   before(:each) do
-    @bamboo_response = {
-      "results"  => {
-        "result" => [
-          {
-            "state" => "Successful",
-            "buildDurationDescription" => "some time it took",
-            "plan" => {"shortName" => "Harvey"},
-            "key" => 33,
-            "buildRelativeTime" => "a long long time ago"
-          }
-        ]
-      }
-    }
     stub_request(:get, 'http://bamboo-place/rest/api/latest/result/MY-BUILD.json?expand=results.result').
-         to_return(:status => 200, :body => @bamboo_response.to_json, :headers => {})
+         to_return(:status => 200, :body => bamboo_response.to_json, :headers => {})
   end
 
   it 'should get bamboo build info from bamboo api' do
@@ -87,5 +87,12 @@ describe 'get build data from bamboo' do
          to_return(:status => 200, :body => so_so.to_json, :headers => {})
     build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'Bamboo'
     expect(build_health[:health]).to eq(50)
+  end
+
+  it 'should allow each build to specify its base url' do
+    stub_request(:get, "http://example.org/bambooooo-server/rest/api/latest/result/A-BUILD.json?expand=results.result").
+      to_return(:status => 200, :body => bamboo_response.to_json, :headers => {})
+    build_health = get_build_health 'id' => 'A-BUILD', 'server' => 'Bamboo', 'baseUrl' => "http://example.org/bambooooo-server"
+    expect(WebMock.a_request(:get, 'http://example.org/bambooooo-server/rest/api/latest/result/A-BUILD.json?expand=results.result')).to have_been_made
   end
 end

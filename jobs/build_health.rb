@@ -5,7 +5,7 @@ def api_functions
   return {
     'Travis' => lambda { |build| get_travis_build_health build['id']},
     'TeamCity' => lambda { |build| get_teamcity_build_health build['id']},
-    'Bamboo' => lambda { |build| get_bamboo_build_health build['id']},
+    'Bamboo' => lambda { |build| get_bamboo_build_health build},
     'Go' => lambda { |build| get_go_build_health build},
     'Jenkins' => lambda { |build| get_jenkins_build_health build}
   }
@@ -91,8 +91,8 @@ def get_go_build_health(build)
   }
 end
 
-def get_bamboo_build_health(build_id)
-  url = "#{Builds::BUILD_CONFIG['bambooBaseUrl']}/rest/api/latest/result/#{build_id}.json?expand=results.result"
+def get_bamboo_build_health(build)
+  url = "#{build.fetch('baseUrl', Builds::BUILD_CONFIG['bambooBaseUrl'])}/rest/api/latest/result/#{build['id']}.json?expand=results.result"
   build_info = get_url url
 
   results = build_info['results']['result']
