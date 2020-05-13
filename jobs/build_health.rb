@@ -6,7 +6,7 @@ def api_functions
     'Travis' => lambda { |build| get_travis_build_health build['id']},
     'TeamCity' => lambda { |build| get_teamcity_build_health build['id']},
     'Bamboo' => lambda { |build| get_bamboo_build_health build['id']},
-    'Go' => lambda { |build| get_go_build_health build['id']},
+    'Go' => lambda { |build| get_go_build_health build},
     'Jenkins' => lambda { |build| get_jenkins_build_health build}
   }
 end
@@ -69,8 +69,9 @@ def get_go_pipeline_status(pipeline)
   return pipeline['stages'].index { |s| s['result'] == 'Failed' } == nil ? SUCCESS : FAILED
 end
 
-def get_go_build_health(build_id)
-  url = "#{Builds::BUILD_CONFIG['goBaseUrl']}/go/api/pipelines/#{build_id}/history"
+def get_go_build_health(build)
+  build_id = build['id']
+  url = "#{build.fetch('baseUrl', Builds::BUILD_CONFIG['goBaseUrl'])}/go/api/pipelines/#{build_id}/history"
 
   if ENV['GO_USER'] != nil then
     auth = [ ENV['GO_USER'], ENV['GO_PASSWORD'] ]

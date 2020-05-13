@@ -3,27 +3,28 @@ require_job 'build_health.rb'
 
 describe 'get build data from go' do
 
-  before(:each) do
-    @go_response = {
-      "pipelines"  => [
-        {
-          "name" => "Go Pipeline",
-          "label" => "90",
-          "stages" => [
-            {
-              "result" => "Passed"
-            }
-          ]
-        }
-      ],
-      "pagination" => {
-        "offset" => 0,
-        "total" => 92,
-        "page_size" => 10
+  go_response = {
+    "pipelines"  => [
+      {
+        "name" => "Go Pipeline",
+        "label" => "90",
+        "stages" => [
+          {
+            "result" => "Passed"
+          }
+        ]
       }
+    ],
+    "pagination" => {
+      "offset" => 0,
+      "total" => 92,
+      "page_size" => 10
     }
+  }
+
+  before(:each) do
     stub_request(:get, 'http://go-place/go/api/pipelines/MY-BUILD/history').
-         to_return(:status => 200, :body => @go_response.to_json, :headers => {})
+         to_return(:status => 200, :body => go_response.to_json, :headers => {})
   end
 
   it 'should get go build info from go api' do
@@ -108,5 +109,12 @@ describe 'get build data from go' do
          to_return(:status => 200, :body => so_so.to_json, :headers => {})
     build_health = get_build_health 'id' => 'MY-BUILD', 'server' => 'Go'
     expect(build_health[:health]).to eq(50)
+  end
+
+  it 'should allow each build to specify its base url' do
+    stub_request(:get, "http://example.org/go-server/go/api/pipelines/A-BUILD/history").
+      to_return(:status => 200, :body => go_response.to_json, :headers => {})
+    build_health = get_build_health 'id' => 'A-BUILD', 'server' => 'Go', 'baseUrl' => "http://example.org/go-server"
+    expect(WebMock.a_request(:get, 'http://example.org/go-server/go/api/pipelines/A-BUILD/history')).to have_been_made
   end
 end
