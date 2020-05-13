@@ -63,6 +63,20 @@ JENKINS_USER=user
 JENKINS_TOKEN=password
 ```
 
+## Different Base URLs
+
+If you have multiple build servers of the same type you'd like to keep an eye on you can specify the `baseUrl` for each build:
+
+```json
+{
+  "builds": [
+    {"id": "Lucene-Solr-Maven-master", "server": "Jenkins", "baseUrl": "https://builds.apache.org"}
+  ]
+}
+```
+
+Please note that this is currently only supported for Jenkins, Go and Bamboo.
+
 ## Docker support
 
 You can spin up a Docker container with build-window by running:
