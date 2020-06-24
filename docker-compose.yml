@@ -2,6 +2,7 @@ version: "3"
 services:
   build-window:
     build: .
+    image: rouanw/build-window:latest
     volumes:
       - .:/build-window
     ports:
