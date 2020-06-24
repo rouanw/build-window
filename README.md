@@ -47,7 +47,7 @@ See https://github.com/Smashing/smashing/wiki for more details.
 
 ### Authentication
 
-Place your API credentials in a `.env` file at the root of the project. (Please note that authentication is currently only supported for Go CD and Jenkins.) Example:
+Place your API credentials in a `.env` file at the root of the project. (Please note that authentication is currently only supported for Go CD, Jenkins and TeamCity.) Example:
 
 #### Go
 
@@ -62,6 +62,11 @@ GO_PASSWORD=password
 JENKINS_USER=user
 JENKINS_TOKEN=password
 ```
+
+#### TeamCity
+
+    TC_USER=user
+    TC_PASSWORD=password
 
 ## Different Base URLs
 
