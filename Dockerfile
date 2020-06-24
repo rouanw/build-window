@@ -5,8 +5,9 @@ RUN apt-get update && \
     apt-get -y install nodejs && \
     apt-get -y clean
 
-COPY . /build-window
+RUN gem install bundler
+COPY ./Gemfile /tmp
+COPY ./Gemfile.lock /tmp
+RUN cd /tmp && bundle install
 
 WORKDIR /build-window
-
-RUN bundle install
