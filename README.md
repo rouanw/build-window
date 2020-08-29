@@ -65,8 +65,8 @@ JENKINS_TOKEN=password
 
 #### TeamCity
 
-    TC_USER=user
-    TC_PASSWORD=password
+    TEAM_CITY_USER=user
+    TEAM_CITY_PASSWORD=password
 
 ## Different Base URLs
 
