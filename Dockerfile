@@ -6,8 +6,8 @@ RUN apt-get update && \
     apt-get -y clean
 
 RUN gem install bundler
-COPY ./Gemfile /tmp
-COPY ./Gemfile.lock /tmp
-RUN cd /tmp && bundle install
+RUN mkdir /build-window
+COPY ./Gemfile /build-window
+RUN cd /build-window && bundle install
 
 WORKDIR /build-window
