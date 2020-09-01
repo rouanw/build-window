@@ -1,6 +1,11 @@
-build-window:
-  build: .
-  ports:
-    - "3030:3030"
-    - "3031:3031"
-  command: smashing start
+version: "3"
+services:
+  build-window:
+    build: .
+    image: rouanw/build-window:latest
+    volumes:
+      - .:/build-window
+    ports:
+      - "3030:3030"
+      - "3031:3031"
+    command: smashing start
