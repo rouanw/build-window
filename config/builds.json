@@ -2,11 +2,11 @@
   "bambooBaseUrl": "https://ci.openmrs.org",
   "goBaseUrl": "https://build.go.cd",
   "teamCityBaseUrl": "https://teamcity.jetbrains.com",
-  "jenkinsBaseUrl": "https://builds.apache.org",
+  "jenkinsBaseUrl": "https://builds.apache.org/job/Kafka",
   "builds": [
     {"id": "sinatra/sinatra", "server": "Travis"},
     {"id": "IntelliJIdeaCe_CommunityTestsLinuxJava8", "server": "TeamCity"},
-    {"id": "Lucene-Solr-Maven-master", "server": "Jenkins"},
+    {"id": "kafka-trunk-jdk15", "server": "Jenkins"},
     {"id": "EBOLA-EEM", "server": "Bamboo"}
   ]
 }
