@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'smashing'
+gem 'smashing', '>= 1.3.0'
 gem 'dotenv'
 gem 'teamcity-ruby-client'
 
