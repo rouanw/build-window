@@ -33,7 +33,7 @@ GEM
       ruby2_keywords (~> 0.0.1)
     public_suffix (5.0.0)
     raabro (1.4.0)
-    rack (2.2.3)
+    rack (2.2.4)
     rack-protection (2.0.8.1)
       rack
     rspec (3.10.0)
