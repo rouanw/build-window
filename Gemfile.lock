@@ -1,8 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.7.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     backports (3.18.2)
     coffee-script (2.4.1)
       coffee-script-source
@@ -31,7 +31,7 @@ GEM
     multipart-post (2.1.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    public_suffix (4.0.6)
+    public_suffix (5.0.0)
     raabro (1.4.0)
     rack (2.2.3)
     rack-protection (2.0.8.1)
